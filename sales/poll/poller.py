@@ -1,34 +1,47 @@
-import django
-import os
-import sys
-import time
-import json
-import requests
-
-sys.path.append("")
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "sales_project.settings")
-django.setup()
-
-# Import models from sales_rest, here.
-# from sales_rest.models import Something
+from django.db import models
 
 
-def poll(repeat=True):
-    while True:
-        print('Sales poller polling for data')
-        try:
-            # Write your polling logic, here
-            # Do not copy entire file
-
-            pass
-        except Exception as e:
-            print(e, file=sys.stderr)
-        
-        if (not repeat):
-            break
-
-        time.sleep(60)
+class AutomobileVO(models.Model):
+    vin = models.CharField(max_length=17)
+    sold = models.BooleanField(default = False)
 
 
-if __name__ == "__main__":
-    poll()
+class Salesperson(models.Model):
+    first_name = models.CharField(max_length = 200, null=True)
+    last_name = models.CharField(max_length= 200, null=True)
+    employee_id = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
+
+
+class Customer(models.Model):
+    first_name = models.CharField(max_length = 200, null=True)
+    last_name = models.CharField(max_length = 200, null=True)
+    address = models.CharField(max_length = 200, null=True)
+    phone_number = models.CharField(max_length=200, null = True)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
+
+
+class Sale(models.Model):
+    price = models.PositiveIntegerField(null=True)
+    automobile = models.ForeignKey(
+        AutomobileVO,
+        related_name="automobile",
+        on_delete=models.CASCADE
+    )
+    salesperson = models.ForeignKey(
+        Salesperson,
+        related_name="salesperson",
+        on_delete=models.CASCADE
+    )
+    customer = models.ForeignKey(
+        Customer,
+        related_name="customer",
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return str(self.salesperson)
