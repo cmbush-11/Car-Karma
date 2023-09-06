@@ -1,4 +1,3 @@
-# from django.shortcuts import render
 from django.http import JsonResponse
 from .models import AutomobileVO, Sale, Salesperson, Customer
 from common.json import ModelEncoder
@@ -63,17 +62,11 @@ def api_list_salespeople(request):
 
     else:
         content = json.loads(request.body)
-        try:
-            salesperson = Salesperson.objects.create(**content)
-            return JsonResponse(
-                salesperson,
-                encoder=SalespersonEncoder,
-                safe=False,
-            )
-        except Salesperson.DoesNotExist:
-            return JsonResponse(
-                {"message": "Invalid Salesperson"},
-                status=400,
+        salesperson = Salesperson.objects.create(**content)
+        return JsonResponse(
+            salesperson,
+            encoder=SalespersonEncoder,
+            safe=False,
             )
 
 
@@ -206,3 +199,14 @@ def api_show_sale(request, id):
         request.method == "DELETE"
         count, _= Sale.objects.get(id=id).delete()
         return JsonResponse({"deleted": count > 0})
+
+
+@require_http_methods(["GET"])
+def api_list_automobileVOs(request):
+    if request.method =="GET":
+        automobileVOs = AutomobileVO.objects.all()
+        return JsonResponse(
+            {"AutomobileVOs": automobileVOs},
+            Encoder = AutomobileVOEncoder,
+            safe = False
+        )
