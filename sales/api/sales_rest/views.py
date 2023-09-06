@@ -141,3 +141,74 @@ def api_show_customer(request, id):
     else:
         count, _ = Customer.objects.filter(id=id).delete()
         return JsonResponse({"deleted": count > 0})
+
+
+@require_http_methods(["GET", "POST"])
+def api_list_sales(request):
+    if request.method == "GET":
+        sales = Sale.objects.all()
+        return JsonResponse(
+            {"sales": sales},
+            encoder=SalesEncoder,
+        )
+
+    else:
+        content = json.loads(request.body)
+
+        try:
+            customer_id = content["customer"]
+            customer = Customer.objects.get(id=customer_id)
+            content["customer"] = customer
+        except Customer.DoesNotExist:
+            return JsonResponse(
+                {"message": "Customer is not valid"},
+                status=400
+            )
+
+        try:
+            salesperson_id = content["salesperson"]
+            salesperson = Salesperson.objects.get(id=salesperson_id)
+            content["salesperson"] = salesperson
+        except Salesperson.DoesNotExist:
+            return JsonResponse(
+                {"message": "Salesperson is not valid"},
+                status=400
+            )
+
+        try:
+            vin = content["automobile"]
+            automobile = AutomobileVO.objects.get(vin=vin)
+            content["automobile"] = automobile
+        except AutomobileVO.DoesNotExist:
+            return JsonResponse(
+                {"message": "Automobile is not valid"},
+                status=400
+            )
+
+        sales = Sale.objects.create(**content)
+        return JsonResponse(
+                {"sales": sales},
+                encoder=SalesEncoder,
+                safe=False,
+            )
+
+
+
+@require_http_methods(["GET", "DELETE"])
+def api_show_sales(request, id):
+    if request.method == "GET":
+        try:
+            sale = Sale.objects.get(id=id)
+            return JsonResponse(
+                sale,
+                encoder=SalesEncoder,
+                safe=False
+            )
+        except Sale.DoesNotExist:
+            return JsonResponse(
+                {"message": "Sales does not exist"},
+            )
+    else:
+        request.method == "DELETE"
+        count, _= Sale.objects.get(id=id).delete()
+        return JsonResponse({"deleted": count > 0})
