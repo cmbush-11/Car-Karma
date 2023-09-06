@@ -195,7 +195,7 @@ def api_list_sales(request):
 
 
 @require_http_methods(["GET", "DELETE"])
-def api_show_sales(request, id):
+def api_show_sale(request, id):
     if request.method == "GET":
         try:
             sale = Sale.objects.get(id=id)
