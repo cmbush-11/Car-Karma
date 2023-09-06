@@ -203,10 +203,10 @@ def api_show_sale(request, id):
 
 @require_http_methods(["GET"])
 def api_list_automobileVOs(request):
-    if request.method =="GET":
+    if request.method == "GET":
         automobileVOs = AutomobileVO.objects.all()
         return JsonResponse(
             {"AutomobileVOs": automobileVOs},
-            Encoder = AutomobileVOEncoder,
-            safe = False
+            Encoder=AutomobileVOEncoder,
+            safe=False
         )
