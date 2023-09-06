@@ -11,9 +11,9 @@ function AddSalesperson(props) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = {};
-        data.firstName = firstName;
-        data.lastName = lastName;
-        data.employeeId = employeeId
+        data.first_name = firstName;
+        data.last_name = lastName;
+        data.employee_id = employeeId
 
         const salespersonUrl = 'http://localhost:8090/api/salespeople/'
         const fetchOptions = {
@@ -49,7 +49,7 @@ function AddSalesperson(props) {
                                 onChange={(event) => setFirstName(event.target.value)}
                                 required placeholder='First Name' type='text' id='First Name' name='First Name' className='form-control'
                             />
-                            <label htmlFor='Last Name'>Last Name</label>
+                            <label htmlFor='Last Name'>First Name</label>
                         </div>
                         <div className='col'>
                         <div className='form-floating mb-3'>
