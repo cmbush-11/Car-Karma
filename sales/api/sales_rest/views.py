@@ -109,18 +109,12 @@ def api_list_customers(request):
 
     else:
         content = json.loads(request.body)
-        try:
-            customer = Customer.objects.create(**content)
-            return JsonResponse(
-                customer,
-                encoder=CustomerEncoder,
-                safe=False,
-            )
-        except Customer.DoesNotExist:
-            return JsonResponse(
-                {"message": "Invalid Customer"},
-                status=400,
-            )
+        customer = Customer.objects.create(**content)
+        return JsonResponse(
+            customer,
+            encoder=CustomerEncoder,
+            safe=False,
+        )
 
 
 @require_http_methods(["GET", "DELETE"])
