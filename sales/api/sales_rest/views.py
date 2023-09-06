@@ -93,5 +93,51 @@ def api_show_salesperson(request, id):
                 status=404
             )
     else:
-        count, _ = Salesperson.objects.filter(id=id).delte()
+        count, _ = Salesperson.objects.filter(id=id).delete()
+        return JsonResponse({"deleted": count > 0})
+
+
+@require_http_methods(["GET", "POST"])
+def api_list_customers(request):
+    if request.method == "GET":
+        customers = Customer.objects.all()
+        return JsonResponse(
+            {"customers": customers},
+            encoder=CustomerEncoder,
+            safe=False
+        )
+
+    else:
+        content = json.loads(request.body)
+        try:
+            customer = Customer.objects.create(**content)
+            return JsonResponse(
+                customer,
+                encoder=CustomerEncoder,
+                safe=False,
+            )
+        except Customer.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid Customer"},
+                status=400,
+            )
+
+
+@require_http_methods(["GET", "DELETE"])
+def api_show_customer(request, id):
+    if request.method == "GET":
+        try:
+            customer = Customer.objects(id=id)
+            return JsonResponse(
+                {"customer": customer},
+                encoder=CustomerEncoder,
+                safe=False,
+            )
+        except Customer.DoesNotExist:
+            return JsonResponse(
+                {"message": "Customer does not exist"},
+                status=404
+            )
+    else:
+        count, _ = Customer.objects.filter(id=id).delete()
         return JsonResponse({"deleted": count > 0})
