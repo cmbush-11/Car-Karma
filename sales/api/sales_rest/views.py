@@ -1,4 +1,4 @@
-from django.shortcuts import render
+# from django.shortcuts import render
 from django.http import JsonResponse
 from .models import AutomobileVO, Sale, Salesperson, Customer
 from common.json import ModelEncoder
