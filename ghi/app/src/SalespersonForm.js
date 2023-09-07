@@ -1,12 +1,12 @@
 import React, { useEffect, useState }  from 'react';
 
 
-function AddSalesperson(props) {
+function SalespersonForm(props) {
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [employeeId, setEmployeeId] = useState('');
-    const [isSumbitted, setIsSumbitted] = useState('');
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -29,7 +29,7 @@ function AddSalesperson(props) {
             setFirstName('');
             setLastName('');
             setEmployeeId('');
-            setIsSumbitted(true);
+            setIsSubmitted(true);
             props.getSalespeople();
         }
     }
@@ -41,7 +41,7 @@ function AddSalesperson(props) {
             <div className='row'>
                 <div className='offset-3 col-6'>
                     <div className='shadow p-4 mt-4'>
-                        <h1>Add salespersonResponse</h1>
+                        <h1>Add Salesperson</h1>
                         <form onSubmit={handleSubmit} id="add-salesperson-form">
                         <div className='form-floating mb-3'>
                             <input
@@ -49,7 +49,7 @@ function AddSalesperson(props) {
                                 onChange={(event) => setFirstName(event.target.value)}
                                 required placeholder='First Name' type='text' id='First Name' name='First Name' className='form-control'
                             />
-                            <label htmlFor='Last Name'>First Name</label>
+                            <label htmlFor='First Name'>First Name</label>
                         </div>
                         <div className='col'>
                         <div className='form-floating mb-3'>
@@ -72,7 +72,7 @@ function AddSalesperson(props) {
                         </div>
                         </div>
                         <button className='btn btn-lg btn-primary'>Add Salesperson</button>
-                        { isSumbitted === true && (
+                        { isSubmitted && (
                             <div className='alert alert-success mb-0' id='success-message'>
                                 <p>Salesperson Added</p>
                             </div>
@@ -85,4 +85,4 @@ function AddSalesperson(props) {
     );
  }
 
- export default AddSalesperson;
+ export default SalespersonForm;

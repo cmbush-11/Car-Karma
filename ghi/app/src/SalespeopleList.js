@@ -1,6 +1,19 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
-function SalespeopleList(props) {
+function SalespeopleList() {
+    const[salespeople, setSalespeople] = useState([])
+
+    const fetchData = async () => {
+        const response = await fetch('http://localhost:8090/api/salespeople/');
+        if (response.ok) {
+            const data = await response.json();
+            setSalespeople(data.salespeople)
+        }
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     const deleteSalesperson = async(salesperson) => {
         try {
@@ -28,7 +41,7 @@ function SalespeopleList(props) {
                 </tr>
             </thead>
             <tbody>
-                {props.salespeople.map(salesperson => {
+                {salespeople.map(salesperson => {
                     return (<tr key={salesperson.id}>
                         <td>{ salesperson.first_name }</td>
                         <td>{ salesperson.last_name }</td>
