@@ -1,19 +1,20 @@
 import React, { useEffect, useState }  from 'react';
 
 
-function SalespersonForm(props) {
+function SalespersonForm() {
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [employeeId, setEmployeeId] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
 
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = {};
         data.first_name = firstName;
         data.last_name = lastName;
-        data.employee_id = employeeId
+        data.employee_id = employeeId;
 
         const salespersonUrl = 'http://localhost:8090/api/salespeople/'
         const fetchOptions = {
@@ -30,7 +31,6 @@ function SalespersonForm(props) {
             setLastName('');
             setEmployeeId('');
             setIsSubmitted(true);
-            props.getSalespeople();
         }
     }
 
