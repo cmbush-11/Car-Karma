@@ -23,9 +23,6 @@ function SalespeopleList() {
                 method: "delete",
             };
             const response = await fetch(salespersonUrl, fetchOptions);
-            if (response.ok) {
-                window.location.reload(false);
-            };
         }
         catch (e) {
             console.log(e)

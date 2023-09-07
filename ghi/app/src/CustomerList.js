@@ -23,9 +23,6 @@ function CustomerList() {
                 method: "delete",
             };
             const response = await fetch(customerUrl, fetchOptions);
-            if (response.ok) {
-                window.location.reload(false);
-            };
         }
         catch (e) {
             console.log(e)

@@ -7,6 +7,7 @@ import SalespeopleList from './SalespeopleList';
 import CustomersList from './CustomerList';
 import CustomerForm from './CustomerForm';
 import SaleForm from './SaleForm';
+import SaleList from './SaleList';
 
 
 function App(props) {
@@ -26,6 +27,7 @@ function App(props) {
             <Route path = "/customers/add" element = {<CustomerForm/>}/>
           </Route>
           <Route path="/sales">
+            <Route index element={<SaleList/>}/>
             <Route path = "/sales/add" element = {<SaleForm/>}/>
           </Route>
         </Routes>
