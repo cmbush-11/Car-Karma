@@ -4,6 +4,7 @@ import MainPage from './MainPage';
 import Nav from './Nav';
 import SalespersonForm from './SalespersonForm';
 import SalespeopleList from './SalespeopleList';
+import SalespersonHistory from './SalespersonHistory';
 import CustomersList from './CustomerList';
 import CustomerForm from './CustomerForm';
 import SaleForm from './SaleForm';
@@ -21,6 +22,7 @@ function App(props) {
           <Route path="/salespeople">
             <Route index element={<SalespeopleList/>}/>
             <Route path = "/salespeople/add" element = {<SalespersonForm/>}/>
+            <Route path = "/salespeople/history" element = {<SalespersonHistory/>}/>
           </Route>
           <Route path="/customers">
             <Route index element={<CustomersList/>}/>
