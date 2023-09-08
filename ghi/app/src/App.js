@@ -9,7 +9,12 @@ import CustomersList from './CustomerList';
 import CustomerForm from './CustomerForm';
 import SaleForm from './SaleForm';
 import SaleList from './SaleList';
-
+import ManufacturerList from './ManufacturerList';
+import ManufacturerForm from './ManufacturerForm';
+import VehicleModelForm from './VehicleModelForm';
+import VehicleModelList from './VehicleModelList';
+import AutoList from './InventoriedAutoList';
+import AutomobileForm from './InventoriedAutoForm';
 
 function App(props) {
 
@@ -31,6 +36,18 @@ function App(props) {
           <Route path="/sales">
             <Route index element={<SaleList/>}/>
             <Route path = "/sales/add" element = {<SaleForm/>}/>
+          </Route>
+          <Route path="/manufacturers">
+            <Route index element={<ManufacturerList/>}/>
+            <Route path = "/manufacturers/add" element = {<ManufacturerForm/>}/>
+          </Route>
+          <Route path="/models">
+            <Route index element={<VehicleModelList/>}/>
+            <Route path = "/models/add" element = {<VehicleModelForm/>}/>
+          </Route>
+          <Route path="/automobiles">
+            <Route index element={<AutoList/>}/>
+            <Route path = "/automobiles/add" element = {<AutomobileForm/>}/>
           </Route>
         </Routes>
       </div>
