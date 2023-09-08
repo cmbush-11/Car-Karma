@@ -1,81 +1,97 @@
-import React, { useEffect, useState }  from 'react';
+import React, { useEffect, useState } from 'react';
 
+const maxRetries = 5;
+const retryDelay = 1000;
 
 function SaleForm() {
+  const [price, setPrice] = useState('');
+  const [automobile, setAutomobile] = useState('');
+  const [automobiles, setAutomobiles] = useState([]);
+  const [salesperson, setSalesperson] = useState('');
+  const [salespeople, setSalespeople] = useState([]);
+  const [customer, setCustomer] = useState('');
+  const [customers, setCustomers] = useState([]);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-    const [price, setPrice] = useState('');
-    const [automobile, setAutomobile] = useState('');
-    const [automobiles, setAutomobiles] = useState([]);
-    const [salesperson, setSalesperson] = useState('');
-    const [salespeople, setSalespeople] = useState([]);
-    const [customer, setCustomer] = useState('');
-    const [customers, setCustomers] = useState([]);
-    const [isSubmitted, setIsSubmitted] = useState(false);
+  const fetchData = async () => {
+    let retries = 0;
+    let success = false;
 
-    const fetchData = async () => {
-        try {
-            const [autoResponse, customerResponse, salespersonResponse] = await Promise.all([
-                fetch('http://localhost:8100/api/automobiles/'),
-                fetch('http://localhost:8090/api/customers/'),
-                fetch('http://localhost:8090/api/salespeople/'),
-            ]);
+    while (retries < maxRetries && !success) {
+      try {
+        const [autoResponse, customerResponse, salespersonResponse] = await Promise.all([
+          fetch('http://localhost:8100/api/automobiles/'),
+          fetch('http://localhost:8090/api/customers/'),
+          fetch('http://localhost:8090/api/salespeople/'),
+        ]);
 
-            if (autoResponse.ok) {
-                const autoData = await autoResponse.json();
-                const availableAutos = autoData.autos.filter(auto => !auto.sold);
-                console.log("Available Automobiles:", availableAutos);
-                setAutomobiles(availableAutos);
-            }
+        if (autoResponse.ok && customerResponse.ok && salespersonResponse.ok) {
+          const [autoData, customerData, salespersonData] = await Promise.all([
+            autoResponse.json(),
+            customerResponse.json(),
+            salespersonResponse.json(),
+          ]);
 
-            if (customerResponse.ok) {
-                const customerData = await customerResponse.json();
-                setCustomers(customerData.customers);
-            }
-
-            if (salespersonResponse.ok) {
-                const salespersonData = await salespersonResponse.json();
-                setSalespeople(salespersonData.salespeople);
-            }
-        } catch (error) {
-            console.error('Error Fetching Data:', error);
+          const availableAutos = autoData.autos.filter(auto => !auto.sold);
+          console.log("Available Automobiles:", availableAutos);
+          setAutomobiles(availableAutos);
+          setCustomers(customerData.customers);
+          setSalespeople(salespersonData.salespeople);
+          success = true;
+        } else {
+          console.log('Retrying due to non-successful response...');
         }
-    };
+      } catch (error) {
+        console.error('Error Fetching Data', error);
+      }
 
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        const data = {};
-        data.price = price;
-        data.automobile = automobile;
-        data.salesperson = salesperson;
-        data.customer = customer;
-        console.log(data);
-
-        const salesUrl = 'http://localhost:8090/api/sales/'
-        const fetchOptions = {
-            method: 'post',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        };
-
-        const saleResponse = await fetch(salesUrl, fetchOptions);
-        if (saleResponse.ok) {
-            setPrice('');
-            setAutomobile('');
-            setSalesperson('');
-            setCustomer('');
-            setIsSubmitted(true)
+      if (!success) {
+        retries++;
+        if (retries < maxRetries) {
+          console.log(`Retry attempt ${retries} in ${retryDelay / 1000} seconds...`);
+          await new Promise(resolve => setTimeout(resolve, retryDelay));
         }
-
+      }
     }
 
-    let dropdownClasses = 'form-select';
+    if (!success) {
+      console.error('Max retries reached. Unable to fetch data.');
+    }
+  };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const data = {};
+    data.price = price;
+    data.automobile = automobile;
+    data.salesperson = salesperson;
+    data.customer = customer;
+    console.log(data);
+
+    const salesUrl = 'http://localhost:8090/api/sales/';
+    const fetchOptions = {
+      method: 'post',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const saleResponse = await fetch(salesUrl, fetchOptions);
+    if (saleResponse.ok) {
+      setPrice('');
+      setAutomobile('');
+      setSalesperson('');
+      setCustomer('');
+      setIsSubmitted(true);
+    }
+  };
+
+  let dropdownClasses = 'form-select';
     return (
         <div className='my-5 container'>
             <div className='row'>
