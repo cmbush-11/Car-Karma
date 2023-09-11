@@ -36,20 +36,18 @@ docker-compose up
 | Service | http://localhost:8080/ | 
 | Get a specific manufacturer | http://localhost:8080/ |
 | Sales | http://localhost:8090/ |
-| Delete a specific manufacturer | DELETE |
 
-: 
-: 
-: 
 
 ### Inventory API (Optional)
  - Put Inventory API documentation here. This is optional if you have time, otherwise prioritize the other services.
 
 ### Service API
- - Put Service API documentation here
+The service API has three models. The user can add, edit, and delete instances of each model as well as view a list of all instances and see the specific details of an individual instance.
+
+
 
 ### Sales API
  - Put Sales API documentation here
 
 ## Value Objects
-The sales microservice has one Value Object, which represents an Automobile and its VIN
+The sales microservice has one Value Object, which represents an Automobile and its VIN.
