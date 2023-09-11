@@ -20,11 +20,11 @@ def get_automobiles():
     url=('http://inventory-api:8000/api/automobiles/')
     response=requests.get(url)
     content=json.loads(response.content)
-    print('fetched automobiles')
+    print('fetched automobiles--------')
     print(content)
 
     for automobile in content['autos']:
-        print("adding automobile "+automobile)
+        print("adding automobile "+str(automobile))
         AutomobileVO.objects.update_or_create(
             import_href=automobile['href'],
             defaults={"vin":automobile["vin"],

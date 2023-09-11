@@ -39,6 +39,8 @@ class AppointmentListEncoder(ModelEncoder):
         "status",
         "reason",
         "vip",
+
+
     ]
     encoders={
         "technician":TechnicianDetailEncoder(),
@@ -47,6 +49,7 @@ class AppointmentListEncoder(ModelEncoder):
 class AppointmentDetailEncoder(ModelEncoder):
     model=Appointment
     properties=[
+        "id",
         "date_time",
         "reason",
         "vin",
@@ -54,6 +57,7 @@ class AppointmentDetailEncoder(ModelEncoder):
         "technician",
         "status",
         "vip",
+
     ]
     encoders={
         "technician":TechnicianDetailEncoder(),
@@ -103,11 +107,16 @@ def show_technician(request,pk):
 
 
 
+
+
+
 @require_http_methods(["GET","POST"])
 def list_appointments(request):
 
     if request.method=="GET":
         appointments=Appointment.objects.all()
+
+
         #go through every appointment and check if it's vin matches an auto
         # auto = AutomobileVO.objects.all();
         # try:
@@ -119,11 +128,24 @@ def list_appointments(request):
         #                 a.vip="no"
         for a in appointments:
             try:
-                auto = AutomobileVO.objects.get(vin=a.vin);
-                a.vip = True
+                found = False
+
+                autos = AutomobileVO.objects.all()
+                print(f'fetched {len(autos)} autmobiles')
+                for au in autos:
+                    print(f'automobile with vin {au.vin}')
+                    if au.vin ==  a.vin:
+                        print('found match!!!')
+                        a.vip = True
+                        found = True
+                if not found:
+                    a.vip = False
+                # auto = AutomobileVO.objects.get(vin=a.vin);
+                # a.vip = True
+
 
             except AutomobileVO.DoesNotExist:
-
+                 print("did not find vehicle with vin = "+a.vin)
                  a.vip=False
         # except AutomobileVO.DoesNotExist:
         #         a.vip="no"
@@ -133,7 +155,7 @@ def list_appointments(request):
         return JsonResponse(
             {"appointments":appointments},
             encoder=AppointmentListEncoder,
-            safe=False,
+
         )
     elif request.method=="POST":
         print(request.body)
@@ -182,7 +204,7 @@ def finish_appointment(request,pk):
         appointment = Appointment.objects.filter(id=pk)[0]
         # print(f'fetch appointment with  {appointment.vip} {type(appointment.vip)}')
 
-        if appointment.status is "created":
+        if appointment.status == "created":
             return JsonResponse(
                 appointment,
                 encoder=AppointmentDetailEncoder,
@@ -191,7 +213,7 @@ def finish_appointment(request,pk):
             )
         else:
             appointment.status = "finished"
-            # vip = appointment.vip;
+            vip = appointment.vip;
 
             # if vip == True or vip.toLowerCase() == "true":
             #     vip = True
@@ -212,7 +234,7 @@ def cancel_appointment(request,pk):
     if request.method=="PUT":
         appointment = Appointment.objects.filter(id=pk)[0]
 
-        if appointment.status is "created":
+        if appointment.status == "created":
             return JsonResponse(
                 appointment,
                 encoder=AppointmentDetailEncoder,
@@ -221,7 +243,7 @@ def cancel_appointment(request,pk):
             )
         else:
             appointment.status = "cancelled"
-            # vip = appointment.vip;
+            vip = appointment.vip;
 
             # if vip == True or vip.toLowerCase() == "true":
             #     vip = True
