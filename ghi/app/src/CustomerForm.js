@@ -1,12 +1,11 @@
 import React, { useEffect, useState }  from 'react';
 
 
-function CustomerForm() {
+function SalespersonForm() {
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [address, setAddress] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
+    const [employeeId, setEmployeeId] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
 
 
@@ -15,10 +14,9 @@ function CustomerForm() {
         const data = {};
         data.first_name = firstName;
         data.last_name = lastName;
-        data.address = address;
-        data.phone_number = phoneNumber;
+        data.employee_id = employeeId;
 
-        const customerUrl = 'http://localhost:8090/api/customers/'
+        const salespersonUrl = 'http://localhost:8090/api/salespeople/'
         const fetchOptions = {
             method: 'post',
             body: JSON.stringify(data),
@@ -27,25 +25,22 @@ function CustomerForm() {
             },
         };
 
-        const customerResponse = await fetch(customerUrl, fetchOptions);
-        if (customerResponse.ok) {
+        const salespersonResponse = await fetch(salespersonUrl, fetchOptions);
+        if (salespersonResponse.ok) {
             setFirstName('');
             setLastName('');
-            setAddress('');
-            setPhoneNumber('');
+            setEmployeeId('');
             setIsSubmitted(true);
         }
     }
-
-    let dropdownClasses = 'form-select';
 
     return (
         <div className='my-5 container'>
             <div className='row'>
                 <div className='offset-3 col-6'>
                     <div className='shadow p-4 mt-4'>
-                        <h1>Add Customer</h1>
-                        <form onSubmit={handleSubmit} id="add-customer-form">
+                        <h1>Add Salesperson</h1>
+                        <form onSubmit={handleSubmit} id="add-salesperson-form">
                         <div className='form-floating mb-3'>
                             <input
                                 value={firstName}
@@ -67,27 +62,17 @@ function CustomerForm() {
                         <div className='col'>
                         <div className='form-floating mb-3'>
                             <input
-                                value={address}
-                                onChange={(event) => setAddress(event.target.value)}
-                                required placeholder='Address' type='text' id='Address' name='Address' className='form-control'
+                                value={employeeId}
+                                onChange={(event) => setEmployeeId(event.target.value)}
+                                required placeholder='Employee ID' type='text' id='Employee ID' name='Employee ID' className='form-control'
                             />
-                            <label htmlFor='Address'>Address</label>
+                            <label htmlFor='Employee ID'>Employee ID</label>
                         </div>
                         </div>
-                        <div className='col'>
-                        <div className='form-floating mb-3'>
-                            <input
-                                value={phoneNumber}
-                                onChange={(event) => setPhoneNumber(event.target.value)}
-                                required placeholder='Phone Number' type='text' id='Phone Number' name='Phone Number' className='form-control'
-                            />
-                            <label htmlFor='Phone Number'>Phone Number</label>
-                        </div>
-                        </div>
-                        <button className='btn btn-lg btn-primary'>Add Customer</button>
+                        <button className='btn btn-lg btn-primary'>Add Salesperson</button>
                         { isSubmitted && (
                             <div className='alert alert-success mb-0' id='success-message'>
-                                <p>Customer Added</p>
+                                <p>Salesperson Added</p>
                             </div>
                         )}
                         </form>
@@ -98,4 +83,4 @@ function CustomerForm() {
     );
  }
 
- export default CustomerForm;
+ export default SalespersonForm;
