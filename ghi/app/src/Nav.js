@@ -48,7 +48,7 @@ function Nav() {
               <NavLink className="nav-link active" to="/models/add">Add Vehicle Model</NavLink>
             </li>
             <li className='nav-item'>
-              <NavLink className="nav-link active" to="/automobiles/">Inventoried Autos</NavLink>
+              <NavLink className="nav-link active" to="/automobiles/">Auto Inventory</NavLink>
             </li>
             <li className='nav-item'>
               <NavLink className="nav-link active" to="/automobiles/add">Add Auto to Inventory</NavLink>

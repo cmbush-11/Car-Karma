@@ -119,8 +119,8 @@ function AutomobileForm() {
                                     onChange={(event) => setManufacturer(event.target.value)}
                                     required placeholder='Manufacturer'
                                     type='text'
-                                    id='Model'
-                                    name='Model'
+                                    id='Manufacturer'
+                                    name='Manufacturer'
                                     className={dropdownClasses}>
                                         <option value=''>Select Manufacturer</option>
                                         {manufacturers.map(manufacturer => {

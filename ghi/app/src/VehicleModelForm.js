@@ -1,113 +1,113 @@
-import React, { useEffect, useState }  from 'react';
 
+import React, { useEffect, useState } from 'react';
 
-function VehicleModelForm() {
-    const [modelName, setModelName] = useState('');
-    const [pictureUrl, setPictureUrl] = useState('');
-    const [manufacturer, setManufacturer] = useState('');
-    const [manufacturers, setManufacturers] = useState([])
-    const [isSubmitted, setIsSubmitted] = useState(false);
+    function VehicleModelForm(props) {
+        const[name, setName] = useState('');
+        const[pictureUrl, setPictureUrl] = useState('');
+        const[isSubmitted, setIsSubmitted] = useState(false);
 
-    const fetchManufacturers = async () => {
-        const response = await fetch('http://localhost:8100/api/manufacturers/')
-        if (response.ok) {
-            const manufacturerList = await response.json();
-            setManufacturers(manufacturerList.manufacturers)
-        }
+        const getModels = (updatedModels) => {
+          if(!updatedModels) {
+            fetch('http://localhost:8100/api/models/')
+                .then((response) => response.json())
+                .then((data) => {
+                    props.setModels(data);
+                })
+                .catch((error) => {
+                    console.error("Error fetching models:", error);
+                });
+          } else {
+            props.setModels(updatedModels);
+          }
+        };
+
+        // const [models, setModels] = useState([]);
+
+        // if (props.models === undefined) {
+        //   return null;
+        // }
+
+    const handleNameChange = (event) => {
+        const value = event.target.value;
+        setName(value);
     }
 
-    useEffect(() => {
-        fetchManufacturers();
-    }, []);
+    const handlePictureUrlChange = (event) => {
+        const value = event.target.value;
+        setPictureUrl(value);
+    }
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async(event) => {
         event.preventDefault();
         const data = {}
-        data.name = modelName;
-        data.picture_url = pictureUrl;
-        data.manufacturer = manufacturer;
 
-        const modelUrl = 'http://localhost:8100/api/models/'
-        const fetchOptions = {
+        data.name = name;
+        data.picture_url = pictureUrl;
+        console.log('raw data is:', data);
+
+
+        const strung = JSON.stringify(data);
+        console.log('string is:', strung);
+        const url = 'http://localhost:8100/api/models/'
+        const fetchConfig = {
             method: 'post',
-            body: JSON.stringify(data),
+            body: strung,
             headers: {
                 'Content-Type': 'application/json',
             },
         };
 
-        const modelResponse = await fetch(modelUrl, fetchOptions);
-        if (modelResponse.ok) {
-            setModelName('');
+        const response = await fetch(url, fetchConfig);
+        if (response.ok) {
+
+            setName('');
             setPictureUrl('');
-            setManufacturer('');
             setIsSubmitted(true);
+            getModels();
         }
     }
 
-    let dropdownClasses = 'form-select';
-
-    return (
-        <div className='my-5 container'>
-            <div className='row'>
-                <div className='offset-3 col-6'>
-                    <div className='shadow p-4 mt-4'>
-                        <h1>Add Vehicle Model</h1>
-                        <form onSubmit={handleSubmit}>
-                        <div className='form-floating mb-3'>
-                            <input
-                                value={modelName}
-                                onChange={(event) => setModelName(event.target.value)}
-                                required placeholder='Model Name'
-                                type='text'
-                                id='Model Name'
-                                name='Model Name'
-                                className='form-control' />
-                            <label htmlFor='Model Name'>Model Name</label>
-                        </div>
-                        <div className='col'>
-                        <div className='form-floating mb-3'>
-                            <input
-                                value={pictureUrl}
-                                onChange={(event) => setPictureUrl(event.target.value)}
-                                required placeholder='Picture'
-                                type='text'
-                                id='Picture'
-                                name='Picture'
-                                className='form-control' />
-                            <label htmlFor='Picture'>Picture</label>
-                        </div>
-                        </div>
-                    <div className='col'>
-                        <div className='mb-3'>
-                            <select
-                                value={manufacturer}
-                                onChange={(event) => setManufacturer(event.target.value)}
-                                name='manufacturer'
-                                id='manufacturer'
-                                className={dropdownClasses} required>
-                                <option value=''>Select Manufacturer</option>
-                                {manufacturers.map(manufacturer => {
-                                    return (
-                                        <option key={manufacturer.id} value={manufacturer.id}>{manufacturer.name}</option>
-                                    )
-                                })}
-                            </select>
-                        </div>
+    return(
+        <div className="row">
+            <div className="offset-3 col-6">
+              <div className="shadow p-4 mt-4">
+                <h1>Model Info</h1>
+                <form onSubmit={handleSubmit} id="create-sales-form">
+                    <div className="form-floating mb-3">
+                        <input
+                            onChange = {handleNameChange}
+                            value = {name}
+                            placeholder="Name"
+                            required type="text"
+                            name="Name"
+                            id="Name"
+                            className="form-control"
+                        />
+                        <label htmlFor="Name">Name</label>
                     </div>
-                        <button className='btn btn-lg btn-primary'>Add Vehicle Model</button>
-                        { isSubmitted === true && (
+                    <div className="form-floating mb-3">
+                        <input
+                            onChange = {handlePictureUrlChange}
+                            value = {pictureUrl}
+                            placeholder="Picture URL"
+                            required type="text"
+                            name="Picture URL"
+                            id="Picture URL"
+                            className="form-control"
+                        />
+                        <label htmlFor="Picture URL">Picture URL</label>
+                    </div>
+                        <button className='btn btn-lg btn-primary'>Add Model</button>
+                        { isSubmitted && (
                             <div className='alert alert-success mb-0' id='success-message'>
-                                <p></p>
-                                <p>Vehicle Model Added</p>
+                                <p>Model Added</p>
                             </div>
                         )}
-                        </form>
-                    </div>
+                    </form>
+                </div>
                 </div>
             </div>
-        </div>
-    );
-}
+      );
+    }
 
 export default VehicleModelForm;

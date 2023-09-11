@@ -1,6 +1,6 @@
 import React,{ useEffect, useState } from 'react';
 
-function SalesList() {
+function SaleList() {
     const [sales, setSales] = useState([]);
 
     const fetchData = async () => {
@@ -54,10 +54,6 @@ return (
         </tbody>
     </table>
 );
-
-
 }
 
-
-
-export default SalesList;
+export default SaleList;
