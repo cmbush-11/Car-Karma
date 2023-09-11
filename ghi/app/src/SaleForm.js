@@ -19,7 +19,6 @@ function SaleForm(props) {
         }
     }
 
-
     const getCustomers = async() => {
         const response = await fetch('http://localhost:8090/api/customers/');
         if (response.ok) {
@@ -65,6 +64,8 @@ function SaleForm(props) {
         data.salesperson = salesperson;
         data.customer = customer;
         data.price = price;
+        console.log("Stringified Deets!", JSON.stringify(data));
+
 
         const salesUrl = 'http://localhost:8090/api/sales/'
         const fetchConfig = {
@@ -86,8 +87,8 @@ function SaleForm(props) {
             setPrice('');
             setIsSubmitted(true);
         }
-
     }
+
     useEffect(() => {
         getAutomobiles();
         getCustomers();
@@ -103,11 +104,11 @@ function SaleForm(props) {
                 <form onSubmit={handleSubmit} id="create-sales-form">
                     <div className="form-floating mb-3">
                         <select
-                            onChange= {handleAutomobileChange}
+                            onChange = {handleAutomobileChange}
                             value ={automobile}
-                            placeholder="Automobile"
-                            required type="text"
-                            name="automobile"
+                            placeholder ="Automobile"
+                            required type ="text"
+                            name ="automobile"
                             id ="automobile"
                             className="form-select"
                         >
@@ -125,10 +126,10 @@ function SaleForm(props) {
                         <input
                             onChange = {handlePriceChange}
                             value = {price}
-                            placeholder="price"
-                            required type="text"
-                            name="price"
-                            id="price"
+                            placeholder ="price"
+                            required type ="text"
+                            name ="price"
+                            id ="price"
                             className="form-control"
                         />
                         <label htmlFor="Price">Price</label>
@@ -136,9 +137,9 @@ function SaleForm(props) {
                     <div className="mb-3">
                         <select
                             onChange = {handleSalespersonChange}
-                            value={salesperson}
-                            required name="Salesperson"
-                            className="form-select"
+                            value ={salesperson}
+                            required name ="Salesperson"
+                            className ="form-select"
                         >
                         <option value ="">Select Salesperson</option>
                         {salespeople.map(salesperson => {
@@ -153,9 +154,9 @@ function SaleForm(props) {
                     <div className="mb-3">
                         <select
                             onChange = {handleCustomerChange}
-                            value ={customer}
-                            required name="customer"
-                            className="form-select"
+                            value = {customer}
+                            required name ="customer"
+                            className ="form-select"
                         >
                         <option value ="">Select Customer</option>
                         {customers.map(customer => {
