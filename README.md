@@ -202,6 +202,9 @@ To delete a specific salesperson, send a DELETE request to the same URL you woul
 The sale model has four fields.
 "price" is a positive integer representing the sale price.
 "automobile" is a foreign key representing the automobile's VIN. This should be the automobil's VIN.
+"salesperson" is a foreign key representing the salesperson making the sale. For the purposes of the sale model, this will simply be the unique number ID corresponding to the salesperson in the database.
+"customer" is a foreign key representing the customer making the purchase. For the purposes of the sale model, this will simply be the unique number ID corresponding to the customer in the database.
+
 
 | Action | Method | URL
 | ----------- | ----------- | ----------- |
