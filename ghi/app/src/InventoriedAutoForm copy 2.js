@@ -55,7 +55,7 @@ import React, { useEffect, useState }  from 'react';
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const autoData = {}
+        const autoData = {};
         autoData.vin = vin;
         autoData.color = color;
         autoData.year = year;
@@ -128,56 +128,56 @@ import React, { useEffect, useState }  from 'react';
                         <label htmlFor='Name'>Year</label>
                     </div>
                     <div className='mb-3'>
-                        <select
-                            value={make}
-                            onChange={handleMakeChange}
-                            name='Make'
-                            id='Make'
-                            className="form-select"
-                        >
-                            <option value=''>Select Make</option>
-                            {manufacturers.map(make => {
-                                return (
-                                    <option
-                                        value={make.id}
-                                        key={make.id}>
-                                        {make.name}
-                                    </option>
-                                );
-                            })}
-                        </select>
-                    </div>
-                    <div className='mb-3'>
-                        <select
-                            value={model}
-                            onChange={handleModelChange}
-                            name='Model'
-                            id='Model'
-                            className="form-select"
-                        >
-                            <option value=''>Select Model</option>
-                            {models.map(model => {
-                                return (
-                                    <option
-                                        value={model.id}
-                                        key={model.id}>
-                                        {model.name}
-                                    </option>
-                                );
-                            })}
-                        </select>
-                    </div>
-                    <button className='btn btn-lg btn-primary'>Add Auto</button>
-                    { isSubmitted && (
-                        <div className='alert alert-success mb-0' id='success-message'>
-                            <p>Auto Added</p>
+                            <select
+                                value={make}
+                                onChange={handleMakeChange}
+                                name='Make'
+                                id='Make'
+                                className="form-select"
+                            >
+                                <option value=''>Select Make</option>
+                                {manufacturers.map(make => {
+                                    return (
+                                        <option
+                                            value={make.id}
+                                            key={make.id}>
+                                            {make.name}
+                                        </option>
+                                    );
+                                })}
+                            </select>
                         </div>
-                    )}
-                </form>
+                        <div className='mb-3'>
+                            <select
+                                value={model}
+                                onChange={handleModelChange}
+                                name='Model'
+                                id='Model'
+                                className="form-select"
+                            >
+                                <option value=''>Select Model</option>
+                                {models.map(model => {
+                                    return (
+                                        <option
+                                            value={model.id}
+                                            key={model.id}>
+                                            {model.name}
+                                        </option>
+                                    );
+                                })}
+                            </select>
+                        </div>
+                        <button className='btn btn-lg btn-primary'>Add Auto</button>
+                        { isSubmitted && (
+                            <div className='alert alert-success mb-0' id='success-message'>
+                                <p>Auto Added</p>
+                            </div>
+                        )}
+                    </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     );
 }
 
