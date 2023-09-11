@@ -12,7 +12,7 @@ import ManufacturerList from './ManufacturerList';
 import ManufacturerForm from './ManufacturerForm';
 import VehicleModelForm from './VehicleModelForm';
 import VehicleModelList from './VehicleModelList';
-import AutoList from './InventoriedAutoList';
+import AutoList from './AutomobileList';
 import AutomobileForm from './InventoriedAutoForm';
 
 
