@@ -1,6 +1,5 @@
 import React, { useEffect, useState }  from 'react';
 
-
 function VehicleModelForm() {
     const [name, setName] = useState('');
     const [pictureUrl, setPictureUrl] = useState('');
@@ -53,8 +52,8 @@ function VehicleModelForm() {
             },
         };
 
-    const manufacturerResponse = await fetch(modelUrl, fetchOptions);
-    if (manufacturerResponse.ok) {
+    const response = await fetch(modelUrl, fetchOptions);
+    if (response.ok) {
         setName('');
         setPictureUrl('');
         setMake('');
@@ -128,10 +127,3 @@ function VehicleModelForm() {
 }
 
 export default VehicleModelForm;
-
-
-// {
-//     "name": "XC90",
-//     "picture_url": "https://upload.wikimedia.org/wikipedia/commons/a/aa/2013_Volvo_XC90.jpg",
-// "manufacturer": 1
-// }

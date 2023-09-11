@@ -1,16 +1,14 @@
 import React, { useEffect, useState }  from 'react';
 
-
-function AutomobileForm() {
-
-    const [vin, setVin] = useState('');
-    const [color, setColor] = useState('');
-    const [year, setYear] = useState('');
-    const [model, setModel] = useState('');
-    const [models, setModels] = useState([]);
-    const [manufacturer, setManufacturer] = useState('');
-    const [manufacturers, setManufacturers] = useState([]);
-    const [isSubmitted, setIsSubmitted] = useState(false);
+    function AutomobileForm() {
+        const [vin, setVin] = useState('');
+        const [color, setColor] = useState('');
+        const [year, setYear] = useState('');
+        const [model, setModel] = useState('');
+        const [models, setModels] = useState([]);
+        const [make, setMake] = useState('');
+        const [manufacturers, setManufacturers] = useState([]);
+        const [isSubmitted, setIsSubmitted] = useState(false);
 
     const fetchData = async () => {
         const [modelsResponse, manufacturersResponse] = await Promise.all([
@@ -50,43 +48,39 @@ function AutomobileForm() {
         setModel(value);
     }
 
-    const handleManufacturerChange = (event) => {
+    const handleMakeChange = (event) => {
         const value = event.target.value;
-        setManufacturer(value);
+        setMake(value);
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = {
-            color: color,
-            year: year,
-            vin: vin,
-            manufacturer: manufacturer,
-            model: model,
-        };
-        console.log("Stringified Car Deets:", JSON.stringify(data));
+        const autoData = {};
+        autoData.vin = vin;
+        autoData.color = color;
+        autoData.year = year;
+        autoData.model = model;
+        autoData.manufacturer = make;
+        console.log("Car deets:", autoData);
+        console.log("Stringified Deets:", JSON.stringify(autoData));
 
-    const autoUrl = 'http://localhost:8100/api/automobiles/'
-    const fetchOptions = {
-        method: 'post',
-        body: JSON.stringify(data),
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        const url = 'http://localhost:8100/api/automobiles/'
+        const fetchOptions = {
+            method: 'post',
+            body: JSON.stringify(autoData),
+            headers: {
+                'Content-Type': 'application/json',
+            },
     };
 
-    const autoResponse = await fetch(autoUrl, fetchOptions);
-    if (autoResponse.ok) {
+    const response = await fetch(url, fetchOptions);
+    if (response.ok) {
         setVin('');
         setColor('');
         setYear('');
         setModel('');
-        setManufacturer('');
+        setMake('');
         setIsSubmitted(true);
-    } else {
-        console.error('Error:', autoResponse.status, autoResponse.statusText);
-        const errorMessage = await autoResponse.text();
-        console.error('Error Message:', errorMessage);
     }
 }
 
@@ -95,77 +89,71 @@ function AutomobileForm() {
             <div className='row'>
                 <div className='offset-3 col-6'>
                     <div className='shadow p-4 mt-4'>
-                        <h1>Add Automobile to Inventory</h1>
-                        <form onSubmit={handleSubmit} id="add-auto-form">
-                        <div>
-                        <div className='form-floating mb-3'>
-                            <input
-                                value={vin}
-                                onChange={handleVinChange}
-                                required placeholder='VIN'
-                                type='text'
-                                id='VIN'
-                                name='VIN'
-                                className='form-control'
-                            />
-                            <label htmlFor='VIN'>VIN</label>
-                        </div>
-                        <div className='form-floating mb-3'>
-                            <input
-                                value={color}
-                                onChange={handleColorChange}
-                                required placeholder='Color'
-                                type='text'
-                                id='Color'
-                                name='Color'
-                                className='form-control'
-                            />
-                            <label htmlFor='Color'>Color</label>
-                        </div>
-                        <div className='form-floating mb-3'>
-                            <input
-                                value={year}
-                                onChange={handleYearChange}
-                                required placeholder='Year'
-                                type='text'
-                                id='Year'
-                                name='Year'
-                                className='form-control'
-                            />
-                            <label htmlFor='Year'>Year</label>
-                        </div>
-                        <div className='form-floating mb-3'>
+                    <h1>Auto Info</h1>
+                    <form onSubmit={handleSubmit} id="add-auto-form">
+                    <div className='form-floating mb-3'>
+                        <input
+                            value={vin}
+                            onChange={handleVinChange}
+                            required placeholder='VIN'
+                            type='text'
+                            id='VIN'
+                            name='VIN'
+                            className='form-control'
+                        />
+                        <label htmlFor='Name'>VIN</label>
+                    </div>
+                    <div className='form-floating mb-3'>
+                        <input
+                            value={color}
+                            onChange={handleColorChange}
+                            required placeholder='Color'
+                            type='text'
+                            id='Color'
+                            name='Color'
+                            className='form-control'
+                        />
+                        <label htmlFor='Name'>Color</label>
+                    </div>
+                    <div className='form-floating mb-3'>
+                        <input
+                            value={year}
+                            onChange={handleYearChange}
+                            required placeholder='Year'
+                            type='text'
+                            id='Year'
+                            name='Year'
+                            className='form-control'
+                        />
+                        <label htmlFor='Name'>Year</label>
+                    </div>
+                    <div className='mb-3'>
                             <select
-                                value={manufacturer}
-                                onChange={handleManufacturerChange}
-                                required placeholder='Manufacturer'
-                                type='text'
-                                id='Manufacturer'
-                                name='Manufacturer'
-                                className='form-select'
+                                value={make}
+                                onChange={handleMakeChange}
+                                name='Make'
+                                id='Make'
+                                className="form-select"
                             >
-                                <option value=''>Select Manufacturer</option>
-                                {manufacturers.map(manufacturer => {
+                                <option value=''>Select Make</option>
+                                {manufacturers.map(make => {
                                     return (
                                         <option
-                                            value={manufacturer.id}
-                                            key={manufacturer.id} >
-                                            {manufacturer.name}
+                                            value={make.id}
+                                            key={make.id}>
+                                            {make.name}
                                         </option>
                                     );
                                 })}
                             </select>
                         </div>
-                    </div>
-                        <div className='form-floating mb-3'>
+                        <div className='mb-3'>
                             <select
                                 value={model}
                                 onChange={handleModelChange}
-                                required placeholder='Model'
-                                type='text'
-                                id='Model'
                                 name='Model'
-                                className='form-select'
+                                id='Model'
+                                className="form-select"
                             >
                                 <option value=''>Select Model</option>
                                 {models.map(model => {
@@ -175,22 +163,22 @@ function AutomobileForm() {
                                             key={model.id}>
                                             {model.name}
                                         </option>
-                                    )
+                                    );
                                 })}
                             </select>
-                    </div>
-                        <button className='btn btn-lg btn-primary'>Add Automobile</button>
+                        </div>
+                        <button className='btn btn-lg btn-primary'>Add Auto</button>
                         { isSubmitted && (
                             <div className='alert alert-success mb-0' id='success-message'>
-                                <p>Automobile Added</p>
+                                <p>Auto Added</p>
                             </div>
                         )}
-                        </form>
+                    </form>
                     </div>
                 </div>
             </div>
         </div>
     );
- }
+}
 
- export default AutomobileForm;
+export default AutomobileForm;
