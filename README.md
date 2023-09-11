@@ -132,6 +132,9 @@ To delete a specific model, send a DELETE request to the same URL you would use 
 ### Service API
  - Put Service API documentation here
 
+The service microservice has three models, appointments, technician and automobileVO. The poller.py file uses the imported automobileVO model to call data from the inventory api, this allows for the service api to have access to automobile data. AutomobileVO model includes import_href, vin and sold fields. This poller allows for up to date information and connection to the inventory database. The appointments model has date_time, reason, status, vin. customer, vip and technicians (FK). This model is used to allow you to create a new appointment, view current and past appointments as well as update the status of the appointment from created to cancelled or finished. The technician model includes first_name, last_name and employee_id fields and is used for creating a new technician, deleting and viewing technicians.
+
+
 ### Sales API
 The sales API has three models: customer, salesperson, and sale. The user can add, edit, and delete instances of each model as well as view a list of all instances and see the specific details of an individual instance. Instructions for using Insomnia to interact with each model follow:
 
