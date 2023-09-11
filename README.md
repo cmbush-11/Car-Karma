@@ -145,7 +145,8 @@ The service microservice has three models, appointments, technician and automobi
 
 List technicians response(takes no body):
 
-{
+```
+`{
 	"technicians": [
 		{
 			"id": 2,
@@ -160,29 +161,43 @@ List technicians response(takes no body):
 			"employee_id": "1"
 		}
 	]
-}
+}`
+```
+
+
+
+
 
 Creating technician takes JSON body:
 
+```
 {
 		"first_name": "Ron",
 		"last_name": "Cheese",
 		"employee_id": "3"
 }
+```
+
 
 and returns:
 
+```
 {
 	"first_name": "Ron",
 	"last_name": "Cheese",
 	"employee_id": "3"
 }
+```
+
 
 Deleting a technician(takes no body and is based off of id) returns:
 
+```
 ​{
   "deleted: true
 }
+```
+
 
 ###Appointments:
 
@@ -196,6 +211,7 @@ Deleting a technician(takes no body and is based off of id) returns:
 
 List appointments takes no body and returns:
 
+```
 {
 	"appointments": [
 		{
@@ -213,8 +229,11 @@ List appointments takes no body and returns:
 			"vip": false
 		},
 }
+```
+
 
 Creating an appointment takes the JSON body:
+```
 {
 		"date_time": "2024-01-01",
 		"reason":"broken",
@@ -223,8 +242,11 @@ Creating an appointment takes the JSON body:
 		"technician": 1
 		
 	}
+```
+
 and returns:
 
+```
 {
 	"id": 6,
 	"date_time": "2024-01-01",
@@ -239,15 +261,21 @@ and returns:
 	"reason": "broken",
 	"vip": false
 }
+```
+
 
 Deleting an appointment takes no body and returns:
 
+```
 {
 	"deleted": true
 }
+```
+
 
 Setting appointment status to cancel takes no body and returns:
 
+```
 {
 	"id": 6,
 	"date_time": "2024-01-01T00:00:00+00:00",
@@ -262,9 +290,12 @@ Setting appointment status to cancel takes no body and returns:
 	"status": "cancelled",
 	"vip": false
 }
+```
+
 
 Setting appointment status to finished takes no body and returns:
 
+```
 {
 	"id": 5,
 	"date_time": "2023-09-11T10:24:00+00:00",
@@ -279,6 +310,8 @@ Setting appointment status to finished takes no body and returns:
 	"status": "finished",
 	"vip": false
 }
+```
+
 
 
 
