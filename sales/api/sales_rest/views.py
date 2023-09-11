@@ -201,12 +201,21 @@ def api_show_sale(request, id):
         return JsonResponse({"deleted": count > 0})
 
 
-@require_http_methods(["GET"])
-def api_list_automobileVOs(request):
-    if request.method == "GET":
-        automobileVOs = AutomobileVO.objects.all()
-        return JsonResponse(
-            {"AutomobileVOs": automobileVOs},
-            Encoder=AutomobileVOEncoder,
-            safe=False
-        )
+# @require_http_methods(["GET", "POST"])
+# def api_list_salespeople(request):
+#     if request.method == "GET":
+#         automobileVos = AutomobileVO.objects.all()
+#         return JsonResponse(
+#             {"AutomobileVOs": automobileVos},
+#             Encoder=AutomobileVOEncoder,
+#             safe=False
+#         )
+
+#     else:
+#         content = json.loads(request.body)
+#         automobileVo = automobileVos.objects.create(**content)
+#         return JsonResponse(
+#             automobileVo,
+#             encoder=AutomobileVOEncoder,
+#             safe=False,
+#             )

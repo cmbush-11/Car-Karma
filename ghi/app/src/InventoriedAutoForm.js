@@ -58,9 +58,8 @@ import React, { useEffect, useState }  from 'react';
         const autoData = {}
         autoData.vin = vin;
         autoData.color = color;
-        autoData.year = year;
-        autoData.model = model;
-        autoData.manufacturer = make;
+        autoData.year = parseInt(year);
+        autoData.model_id = model;
         console.log("Car deets:", autoData);
         console.log("Stringified Deets:", JSON.stringify(autoData));
 
@@ -120,7 +119,7 @@ import React, { useEffect, useState }  from 'react';
                             value={year}
                             onChange={handleYearChange}
                             required placeholder='Year'
-                            type='text'
+                            type='number'
                             id='Year'
                             name='Year'
                             className='form-control'
