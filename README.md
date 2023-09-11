@@ -29,10 +29,18 @@ docker-compose up
 ## API Documentation
 
 ### URLs and Ports
-The following are the ports for the various microservices.
-Inventory: http://localhost:8100/
-Service: http://localhost:8080/
-Sales: http://localhost:8090/
+
+| Service | URL
+| ----------- | ----------- |
+| Inventory | http://localhost:8100/
+| Service | http://localhost:8080/ | 
+| Get a specific manufacturer | http://localhost:8080/ |
+| Sales | http://localhost:8090/ |
+| Delete a specific manufacturer | DELETE |
+
+: 
+: 
+: 
 
 ### Inventory API (Optional)
  - Put Inventory API documentation here. This is optional if you have time, otherwise prioritize the other services.
