@@ -22,7 +22,7 @@ docker-compose up
 5. Access the project in your web browser at http://localhost:3000/.
 
 ## Diagram
- - Put diagram here
+ ![Img](/images/CarCarDiagram.png)
 
 ## API Documentation
 
@@ -38,6 +38,9 @@ docker-compose up
 ### Inventory API (Optional)
 
 #### Manufacturers:
+
+Manufacturer has one field.
+"name" is a string representing the manufacturer's name.
 
 | Action | Method | URL
 | ----------- | ----------- | ----------- |
@@ -59,6 +62,11 @@ To create a manufacturer change the request format to JSON and send a POST reque
 To delete a specific manufacturer, send a DELETE request to the same URL you would use to edit or view the manufacturer.
 
 #### Vehicle Models:
+
+Vehicle model has three fields.
+"name" is a string representing the name of the model.
+"picture_url" is a URL of a picture file of the model. This field must be formatted as a valid URL.
+"manufacturer" is a foreign key representing the model's manufacturer. For purposes of the vehicle model, this will simply be the number corresponding to the manufacturer's unique ID in the database.
 
 | Action | Method | URL
 | ----------- | ----------- | ----------- |
@@ -88,11 +96,11 @@ To delete a specific model, send a DELETE request to the same URL you would use 
 #### Automobiles:
 
 The Automobile model has 5 fields.
-Color is a string representing the automobile's color.
-Year is a number representing the autombile's year. This must be a number, not a string.
-VIN is a string in the form of a 17 character alphanumeric code representing the automobile's unique Vehicle Identification Number. This value must be unique in the database.
-Sold is a boolean field in which true means the car has been sold and false means the car has not been sold. New Automobile instances will not be sold by default.
-Model is a foregin
+"color" is a string representing the automobile's color.
+"year" is a number representing the autombile's year. This must be a number, not a string.
+"vin" is a string in the form of a 17 character alphanumeric code representing the automobile's unique Vehicle Identification Number. This value must be unique in the database.
+"sold" is a boolean field in which true means the car has been sold and false means the car has not been sold. New Automobile instances will not be sold by default.
+"model" is a foreign key representing the automobile's model. For purposes of the automobile, this will simply be the number corresponding to the model's unique ID.
 
 | Action | Method | URL
 | ----------- | ----------- | ----------- |
@@ -121,13 +129,17 @@ To edit a model, send a PUT request to the listed URl with the ID corresponding 
 To delete a specific model, send a DELETE request to the same URL you would use to edit or view the model.
 
 
-### Sales API
- - Put Sales API documentation here
-
 ### Service API
-The service API has three models: customer, salesperson, and sale. The user can add, edit, and delete instances of each model as well as view a list of all instances and see the specific details of an individual instance. Instructions for using Insomnia to interact with each model follow:
+ - Put Service API documentation here
 
-#### Customers:
+### Sales API
+The sales API has three models: customer, salesperson, and sale. The user can add, edit, and delete instances of each model as well as view a list of all instances and see the specific details of an individual instance. Instructions for using Insomnia to interact with each model follow:
+
+ #### Customers:
+
+ The customer model has 3 keys.
+ "first_name" and "last_name" are strings representing the customer's name.
+ "phone_numer" is a string representing the customer's phone number.
 
 | Action | Method | URL
 | ----------- | ----------- | ----------- |
@@ -155,7 +167,11 @@ To edit a customer, send a PUT request to the listed URl with the ID correspondi
 
 To delete a specific customer, send a DELETE request to the same URL you would use to edit or view the customer.
 
-#### Salespoeople:
+#### Salespeople:
+
+The salesperson model has three fields.
+"first_name" and "last_name" are strings representing the salesperson's name.
+"employee_id" is a string representing the salesperson's employee_id. Note: This is different from the employee's ID in the database.
 
 | Action | Method | URL
 | ----------- | ----------- | ----------- |
@@ -169,12 +185,12 @@ To list all salespeople send a GET request to the listed URL.
 
 To see the details of an individual salesperson, send a GET request to the listed URL, replacing id with that salesperson's integer ID. The IDs can be found in the list of all salespeople.
 
-To create a salesperson change the request format to JSON and send a POST request to the listed URL. The JSON should be in the following format, which will create a salesperson named Chester Arthur with the employee id. Note: This is different from the employee's ID in the database.
+To create a salesperson change the request format to JSON and send a POST request to the listed URL. The JSON should be in the following format, which will create a salesperson named Chester Arthur with the employee id POTUS21.
 ```
 {
   "first_name": "Chester",
   "last_name": "Arthur",
-	"employee_id": "POTUS21"
+  "employee_id": "POTUS21"
 }
 ```
 To edit a salesperson, send a PUT request to the listed URl with the ID corresponding to the salesperson you wish to edit. Change the format to JSON. The JSON should be formatted just the same as when creating a salesperson. Simply replace the old value with the new one.
@@ -182,6 +198,10 @@ To edit a salesperson, send a PUT request to the listed URl with the ID correspo
 To delete a specific salesperson, send a DELETE request to the same URL you would use to edit or view the salesperson.
 
 #### Sales:
+
+The sale model has four fields.
+"price" is a positive integer representing the sale price.
+"automobile" is a foreign key representing the automobile's VIN. This should be the automobil's VIN.
 
 | Action | Method | URL
 | ----------- | ----------- | ----------- |
@@ -208,8 +228,6 @@ To edit a sale, send a PUT request to the listed URl with the ID corresponding t
 
 To delete a specific sale, send a DELETE request to the same URL you would use to edit or view the sale.
 
-### Sales API
- - Put Sales API documentation here
 
 ## Value Objects
 The sales microservice has one Value Object, which represents an Automobile and its VIN.
