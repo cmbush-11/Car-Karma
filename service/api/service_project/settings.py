@@ -30,8 +30,6 @@ DEBUG = True
 # Application definition
 
 INSTALLED_APPS = [
-    'service_rest.apps.ServiceRestConfig',
-    "corsheaders",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,7 +39,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -64,6 +61,8 @@ CSRF_TRUSTED_ORIGINS = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    # "http://localhost:8080/api/appointments",
+    # "http://localhost:8080/api/technicians",
 ]
 CORS_ALLOW_CREDENTIALS = True
 

@@ -1,86 +1,119 @@
-CarCar
+# CarCar
+
 Team:
 
 * Person 1 - Which microservice?
-* Person 2 - Which microservice?
+* Christopher M. Bush - Sales
 
-## Design
+## How to Run this App
 
-}
+1. Fork the repository located at this URL: https://gitlab.com/eringerber/project-beta
 
-Explain your models and integration with the inventory
-microservice, here.
+2. Clone the forked repository onto your local computer: git clone https://gitlab.com/eringerber/project-beta.git
 
-The service microservice has three models, appointments, technician and automobileVO. The poller.py file uses the imported automobileVO model to call data from the inventory api, this allows for the service api to have access to automobile data. AutomobileVO model includes import_href, vin and sold fields. This poller allows for up to date information and connection to the inventory database. The appointments model has date_time, reason, status, vin. customer, vip and technicians (FK). This model is used to allow you to create a new appointment, view current and past appointments as well as update the status of the appointment from created to cancelled or finished. The technician model includes first_name, last_name and employee_id fields and is used for creating a new technician, deleting and viewing technicians.
+3. Run the following commands in your terminal to set the project up and then to get it running:
+```
+docker volume create beta-data
+docker-compose build
+docker-compose up
+```
+4. In the containers tab in Docker Desktop, click the ">" symbol to the left of the underlined name "project-beta" to check that all of the containers are running.
 
-returns following response:
-{
-"id": 6,
-"date_time": "2024-01-01",
-"vin": "5N3AA08D68N901917",
-"customer": "leonard",
-"technician": {
-"first_name": "Sally",
-"last_name": "Stewart",
-"employee_id": "1"
-},
-"status": "created",
-"reason": "it's broken!",
-"vip": false
-}
-Deleting an appointment takes no body and responds:
-{
-"deleted": true
-}
-Setting appointment to cancelled takes no body and responds(based upon appointment id):
-{
-"id": 6,
-"date_time": "2024-01-01T00:00:00+00:00",
-"reason": "it's broken!",
-"vin": "5N3AA08D68N901917",
-"customer": "leonard",
-"technician": {
-"first_name": "Sally",
-"last_name": "Stewart",
-"employee_id": "1"
-},
-"status": "cancelled",
-"vip": false
-}
-Setting appointment to finished takes no body and responds(based upon appointment id):
-{
-"id": 5,
-"date_time": "2023-09-11T10:24:00+00:00",
-"reason": "Broke!!!!!!!!!",
-"vin": "JH4DA9360PS004131",
-"customer": "me!",
-"technician": {
-"first_name": "Sally",
-"last_name": "Stewart",
-"employee_id": "1"
-},
-"status": "finished",
-"vip": false
-}
-Getting list of appointments responds:
-{
-"appointments": [
-{
-"id": 1,
-"date_time": "2023-09-10T16:55:00+00:00",
-"vin": "2FTHF36F8SCA65608",
-"customer": "Matilda",
-"technician": {
-"first_name": "Sally",
-"last_name": "Stewart",
-"employee_id": "1"
-},
-"status": "cancelled",
-"reason": "idk",
-"vip": false
-}
-​
+5. Access the project in your web browser at http://localhost:3000/.
 
-Sales microservice
+## Diagram
+ - Put diagram here
+
+## API Documentation
+
+### URLs and Ports
+
+| Service | URL
+| ----------- | ----------- |
+| Inventory | http://localhost:8100/
+| Service | http://localhost:8080/ |
+| Get a specific manufacturer | http://localhost:8080/ |
+| Sales | http://localhost:8090/ |
+
+
+### Inventory API (Optional)
+ - Put Inventory API documentation here. This is optional if you have time, otherwise prioritize the other services.
+
+### Service API
+The service API has three models: customer, salesperson, and sale. The user can add, edit, and delete instances of each model as well as view a list of all instances and see the specific details of an individual instance. Instructions for using Insomnia to interact with each model follow:
+
+#### Customers:
+
+| Action | Method | URL
+| ----------- | ----------- | ----------- |
+| List all customers | GET | http://localhost:8090/api/customers/
+| Show a specific customer | GET | http://localhost:8090/api/customers/id/
+| Create a customer | POST | http://localhost:8090/api/customers/
+| Edit a customer | PUT | http://localhost:8090/api/customers/id/
+| Delete a specific customer | DELETE | http://localhost:8090/api/customers/id/
+
+To list all customers send a GET request to the listed URL.
+
+To see the details of an individual customer, send a GET request to the listed URL, replacing <id> with that customer's integer ID. The IDs can be found in the list of all customers.
+
+To create create a customer change the request format to JSON and send a POST request to the listed URL. The JSON will be in the following format, which would create a customer named Reggie Miller with the listed address and phone number.
+```
+{
+	"first_name": "Reggie",
+	"last_name": "Miller",
+	"address": "300 East Market Street; Indianapolis,",
+	"phone_number": "317-867-5309"
+}
+```
+To edit a customer, send a PUT request to the listed URl with the ID corresponding to the customer you wish to edit. Change the format to JSON. The JSON will be formatted just the same as when creating a customer. Simply replace the old value with the new one.
+
+To delete a specific customer, send a DELETE request to the same URL you would use to edit or view the customer.
+
+#### Salespoeople:
+
+| Action | Method | URL
+| ----------- | ----------- | ----------- |
+| List all salespeople | GET | http://localhost:8090/api/salespeople/
+| Show a specific salesperson | GET | http://localhost:8090/api/salespeople/id/
+| Create a salesperson | POST | http://localhost:8090/api/salespeople/
+| Edit a salesperson | PUT | http://localhost:8090/api/salespeople/id/
+| Delete a specific salesperson | DELETE | http://localhost:8090/api/salespeople/id/
+
+To list all salespeople send a GET request to the listed URL.
+
+To see the details of an individual salesperson, send a GET request to the listed URL, replacing <id> with that salesperson's integer ID. The IDs can be found in the list of all salespeople.
+
+To create create a salesperson change the request format to JSON and send a POST request to the listed URL. The JSON will be in the following format, which would create a salesperson named Chester Arthur with the employee id. Note: This is different from the employee's ID in the database.
+```
+{
+  "first_name": "Chester",
+  "last_name": "Arthur",
+	"employee_id": "POTUS21"
+}
+```
+To edit a salesperson, send a PUT request to the listed URl with the ID corresponding to the salesperson you wish to edit. Change the format to JSON. The JSON will be formatted just the same as when creating a salesperson. Simply replace the old value with the new one.
+
+To delete a specific salesperson, send a DELETE request to the same URL you would use to edit or view the salesperson.
+
+#### Sales:
+
+| Action | Method | URL
+| ----------- | ----------- | ----------- |
+| List all sales | GET | http://localhost:8090/api/sales/
+| Show a specific sale | GET | http://localhost:8090/api/sales/id/
+| Create a sale | POST | http://localhost:8090/api/salesp/
+| Edit a sale | PUT | http://localhost:8090/api/sales/id/
+| Delete a specific sale | DELETE | http://localhost:8090/api/sales/id/
+
+To list all sales send a GET request to the listed URL.
+
+To see the details of an individual sale, send a GET request to the listed URL, replacing <id> with that sale's integer ID. The IDs can be found in the list of all sales.
+
+## Service microservice
+
+To delete a specific sale, send a DELETE request to the same URL you would use to edit or view the sale.
+
+## Sales microservice
+
 Explain your models and integration with the inventory
 microservice, here.
