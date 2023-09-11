@@ -17,7 +17,8 @@ function ManufacturerForm() {
             headers: {
                 'Content-Type': 'application/json',
             },
-        };
+
+        };console.log(fetchOptions)
 
         const manufacturerResponse = await fetch(manufacturerUrl, fetchOptions);
         if (manufacturerResponse.ok) {
