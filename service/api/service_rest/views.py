@@ -126,22 +126,25 @@ def list_appointments(request):
         #                 a.vip="yes"
         #             else:
         #                 a.vip="no"
+        request
+
         for a in appointments:
             try:
-                found = False
 
-                autos = AutomobileVO.objects.all()
-                print(f'fetched {len(autos)} autmobiles')
-                for au in autos:
-                    print(f'automobile with vin {au.vin}')
-                    if au.vin ==  a.vin:
-                        print('found match!!!')
-                        a.vip = True
-                        found = True
-                if not found:
-                    a.vip = False
-                # auto = AutomobileVO.objects.get(vin=a.vin);
-                # a.vip = True
+                # found = False
+
+                # autos = AutomobileVO.objects.all()
+                # print(f'fetched {len(autos)} autmobiles')
+                # for au in autos:
+                #     print(f'automobile with vin {au.vin}')
+                #     if au.vin ==  a.vin:
+                #         print('found match!!!')
+                #         a.vip = True
+                #         found = True
+                # if not found:
+                #     a.vip = False
+                auto = AutomobileVO.objects.get(vin=a.vin);
+                a.vip = True
 
 
             except AutomobileVO.DoesNotExist:
@@ -204,7 +207,7 @@ def finish_appointment(request,pk):
         appointment = Appointment.objects.filter(id=pk)[0]
         # print(f'fetch appointment with  {appointment.vip} {type(appointment.vip)}')
 
-        if appointment.status == "created":
+        if appointment.status is "created":
             return JsonResponse(
                 appointment,
                 encoder=AppointmentDetailEncoder,
@@ -234,7 +237,7 @@ def cancel_appointment(request,pk):
     if request.method=="PUT":
         appointment = Appointment.objects.filter(id=pk)[0]
 
-        if appointment.status == "created":
+        if appointment.status is "created":
             return JsonResponse(
                 appointment,
                 encoder=AppointmentDetailEncoder,

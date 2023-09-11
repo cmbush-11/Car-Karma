@@ -32,6 +32,7 @@ function VehicleModelForm() {
         const url = 'http://localhost:8100/api/models/'
         const fetchOptions = {
             method: 'post',
+            mode: 'no-cors',
             body: JSON.stringify(formData),
             headers: {
                 'Content-Type': 'application/json',

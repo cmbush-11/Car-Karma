@@ -8,6 +8,7 @@ function AppointmentHistoryList() {
   const [filteredAppointments, setFilteredAppointments] = useState([])
   const [autos, setAutomobiles] = useState([])
 
+  const searchField = React.useRef(null)
 
 
 
@@ -51,33 +52,11 @@ function AppointmentHistoryList() {
   }, [])
 
 
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault()
-  //   setQuery(event.target.value)
-  // }
-
-
-  // const handleSearch =(event)=>{
-
-  //   let filter = event.target.value
-  //   const filtered = []
-  //   filtered = appointments.filter(a => a.vin.toLowerCase().startsWith(filter.toLowerCase()))
-  //   console.log(filtered)
-  //   setFilteredAppointments(filtered)
-  // };
-
-  const handleSearch = (event) => {
-    let filter = event.target.value;
-    let filtered = []
-    filtered = appointments.filter(a => a.vin.toLowerCase().startsWith(filter.toLowerCase()))
-    setFilteredAppointments(filtered)
-  };
-
-  // const handleSubmit=(event)=> {
-  //   event.preventDefault()
-  //   console.log('searching for'+{searchTerm})
-  // }
+const handleSearch = (event) => {
+  let filter = searchField.current.value
+  let filtered = appointments.filter(a => a.vin.toLowerCase().startsWith(filter.toLowerCase()))
+  setFilteredAppointments(filtered)
+};
 
 
 
@@ -89,7 +68,12 @@ return (
   <div>
 
 
-  <input placeholder="Search vin" onChange={handleSearch} />
+    <input placeholder="Search vin" ref={searchField} />
+    <button  onClick={handleSearch}>Search</button>
+
+
+
+
 
 
   <table className="table table-striped" data={filteredAppointments}>
@@ -126,63 +110,11 @@ return (
       </tbody>
 
     </table>
+
   </div>
 )
+
       }
-
-//   return (
-//     <div>
-
-//       <input placeholder="Search vin" onChange={event => setQuery(event.target.value)} />
-
-//       {appointments.filter(appointment => {
-//         if (query === '') {
-//           return appointment;
-//         } else if (appointment.vin.toLowerCase().startsWith(query.toLowerCase())) {
-
-//           return appointment
-//         }
-//       }).map(appointment => (
-// <table className="table table-striped">
-//           <thead>
-//             <tr>
-//               <th>Is VIP?</th>
-//               <th>Vin</th>
-//               <th>Date</th>
-//               <th>Customer</th>
-//               <th>Reason</th>
-//               <th>Technician</th>
-//               <th>Status</th>
-
-//             </tr>
-//           </thead>
-//           <tbody>
-//          {/* the map method of arrat instances creates a new array populated with the results of calling a provided function on every element in the calling array */}
-//             {appointments.map(appointment=> {
-//               return (
-//                 <tr key={appointment.id}>
-//                   <td>{appointment.vip}</td>
-//                   <td>{appointment.vin}</td>
-//                   <td>{new Date(appointment.date_time).toLocaleDateString()}</td>
-//                   <td>{new Date(appointment.date_time).toLocaleTimeString()}</td>
-//                   <td>{appointment.customer}</td>
-//                   <td>{appointment.reason}</td>
-//                   <td>{appointment.technician.first_name}</td>
-//                   <td>{appointment.status}</td>
-//                   <td></td>
-//                 </tr>
-//               );
-//             })}
-//           </tbody>
-//         </table>
-
-//       ))
-
-//       }
-//       </div>
-//   )
-
-//     }
 
 
 
