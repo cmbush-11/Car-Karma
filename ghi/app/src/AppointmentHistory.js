@@ -10,15 +10,21 @@ function AppointmentHistoryList() {
 
 
 
+
+
+
   const getInventoryData = async () => {
     const url = "http://localhost:8100/api/automobiles/"
     const response = await fetch(url)
     if (response.ok) {
       const data = await response.json();
-      console.log(data.autos)
+
       setAutomobiles(data.autos)
+      console.log(data.autos)
+
     }
   }
+
 
 
 
@@ -29,11 +35,10 @@ function AppointmentHistoryList() {
       console.log(data)
       setAppointments(data.appointments)
       setFilteredAppointments(data.appointments)
+
+
     }
   }
-
-
-
 
 
 
@@ -52,6 +57,16 @@ function AppointmentHistoryList() {
   //   setQuery(event.target.value)
   // }
 
+
+  // const handleSearch =(event)=>{
+
+  //   let filter = event.target.value
+  //   const filtered = []
+  //   filtered = appointments.filter(a => a.vin.toLowerCase().startsWith(filter.toLowerCase()))
+  //   console.log(filtered)
+  //   setFilteredAppointments(filtered)
+  // };
+
   const handleSearch = (event) => {
     let filter = event.target.value;
     let filtered = []
@@ -59,15 +74,31 @@ function AppointmentHistoryList() {
     setFilteredAppointments(filtered)
   };
 
+  // const handleSubmit=(event)=> {
+  //   event.preventDefault()
+  //   console.log('searching for'+{searchTerm})
+  // }
+
+
+
+
 return (
+
+
+
   <div>
+
+
   <input placeholder="Search vin" onChange={handleSearch} />
+
+
   <table className="table table-striped" data={filteredAppointments}>
       <thead>
         <tr>
           <th>Is VIP?</th>
           <th>Vin</th>
           <th>Date</th>
+          <th>Time</th>
           <th>Customer</th>
           <th>Reason</th>
           <th>Technician</th>
@@ -80,7 +111,7 @@ return (
         {filteredAppointments.map(appointment => {
           return (
             <tr key={appointment.id}>
-              <td>{appointment.vip}</td>
+              <td>{String(appointment.vip)}</td>
               <td>{appointment.vin}</td>
               <td>{new Date(appointment.date_time).toLocaleDateString()}</td>
               <td>{new Date(appointment.date_time).toLocaleTimeString()}</td>

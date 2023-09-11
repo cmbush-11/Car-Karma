@@ -45,7 +45,7 @@ function VehicleModelList() {
 
 
     return (
-        <>
+
         <table className="table table-striped">
           <thead>
           <tr>
@@ -75,7 +75,7 @@ function VehicleModelList() {
             })}
           </tbody>
         </table>
-        </>
+
       );
 
 }

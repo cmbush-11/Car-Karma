@@ -30,7 +30,8 @@ def api_automobiles(request):
                 encoder=AutomobileEncoder,
                 safe=False,
             )
-        except:
+        except Exception as e:
+            print(f'exection in create auto {str(e)}')
             response = JsonResponse(
                 {"message": "Could not create the automobile"}
             )
@@ -161,7 +162,8 @@ def api_vehicle_models(request):
         models = VehicleModel.objects.all()
         return JsonResponse(
             {"models": models},
-            encoder=VehicleModelEncoder
+            encoder=VehicleModelEncoder,
+            safe=False,
         )
     else:
         try:
@@ -175,7 +177,8 @@ def api_vehicle_models(request):
                 encoder=VehicleModelEncoder,
                 safe=False,
             )
-        except:
+        except Exception as e:
+            print(f'create automobile encountered exception {str(e)}')
             response = JsonResponse(
                 {"message": "Could not create the vehicle model"}
             )

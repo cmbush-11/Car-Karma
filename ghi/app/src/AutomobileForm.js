@@ -90,11 +90,14 @@ function AutomobileForm() {
                                     value={color}
                                     onChange={(event) => setColor(event.target.value)}
                                     required placeholder='Color'
-                                    type='Color'
+                                    type="text"
                                     id='Color'
                                     name='Color'
                                     className='form-control'
                                 />
+
+
+
                                 <label htmlFor='Color'>Color</label>
                             </div>
                         </div>

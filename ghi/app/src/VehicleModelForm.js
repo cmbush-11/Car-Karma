@@ -2,18 +2,12 @@ import React, { useEffect, useState }  from 'react';
 
 
 function VehicleModelForm() {
-    // const [modelName, setModelName] = useState('');
-    // const [pictureUrl, setPictureUrl] = useState('');
-    // const [manufacturer, setManufacturer] = useState('');
     const [manufacturers, setManufacturers] = useState([])
-
     const [formData, setFormData]=useState({
         name:'',
         manufacturer:'',
         picture_url:'',
     })
-
-
 
     const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -22,6 +16,7 @@ function VehicleModelForm() {
         if (response.ok) {
             const manufacturerList = await response.json();
             setManufacturers(manufacturerList.manufacturers)
+            console.log(manufacturerList.manufacturers)
         }
     }
 
@@ -33,16 +28,18 @@ function VehicleModelForm() {
         event.preventDefault();
 
 
-        const modelUrl = 'http://localhost:8100/api/models/'
+
+        const url = 'http://localhost:8100/api/models/'
         const fetchOptions = {
             method: 'post',
             body: JSON.stringify(formData),
             headers: {
                 'Content-Type': 'application/json',
             },
-        };
+        };console.log(fetchOptions)
+        console.log(url)
 
-        const modelResponse = await fetch(modelUrl, fetchOptions);
+        const modelResponse = await fetch(url, fetchOptions);
         if (modelResponse.ok) {
             setFormData({
                 name:'',
@@ -83,28 +80,37 @@ return (
                 </p>
 
                 <div className="mb-3">
-                <select onChange={handleChangeName} name="manufacturer" id="manufacturer" required>
+                {/* <select onChange={handleChangeName} name="manufacturer" id="manufacturer" required>
                     <option value="">Choose a manufacturer</option>
                     {
                       manufacturers.map(manufacturer => {
                         return (
-                          <option key={manufacturer.href} value={manufacturer.href}>{manufacturer.name}</option>
+                          <option key={manufacturer.id} value={manufacturer.href}>{manufacturer.name}</option>
                         )
                       })
                     }
-                  </select>
+                  </select> */}
+
+                  <select onChange={handleChangeName} value={formData.manufacturer} required name="manufacturer" id="manufacturer" className="form-select">
+                <option value="">Choose a manufactuer</option>
+                {manufacturers.map(manufacturer=> {
+                  return (
+                    <option key={manufacturer.href} value={manufacturer.id}>{manufacturer.name}</option>
+                  )
+                })}
+              </select>
 
                 </div>
                 <div className="row">
                   <div className="col">
                     <div className="form-floating mb-3">
-                      <input onChange={handleChangeName} required placeholder="name" type="text" id="name" name="name" className="form-control" />
+                      <input onChange={handleChangeName} value={formData.name}required placeholder="name" type="text" id="name" name="name" className="form-control" />
                       <label htmlFor="name">Choose a name</label>
                     </div>
                   </div>
                   <div className="col">
                     <div className="form-floating mb-3">
-                      <input onChange={handleChangeName} required placeholder="picture url" type="text" id="picture_url" name="picture_url" className="form-control" />
+                      <input onChange={handleChangeName} value={formData.picture_url}required placeholder="picture url" type="text" id="picture_url" name="picture_url" className="form-control" />
                       <label htmlFor="picture_url">picture</label>
                     </div>
                   </div>

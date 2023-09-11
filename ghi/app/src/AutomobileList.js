@@ -3,8 +3,11 @@ import React, {useState, useEffect} from 'react';
 function AutoList() {
     const[autos, setAutos] = useState([]);
 
-    const fetchAutos = async () => {
-        const response = await fetch('http://localhost:8100/api/automobiles/')
+
+
+
+    const fetchData = async () => {
+        const response = await fetch('http://localhost:8100/api/automobiles/');
         if (response.ok) {
             const data = await response.json();
             console.log(data);
@@ -13,7 +16,7 @@ function AutoList() {
     }
 
     useEffect(() => {
-        fetchAutos();
+        fetchData();
     }, []);
 
     return (
@@ -36,9 +39,9 @@ function AutoList() {
                             <td>{ auto.vin }</td>
                             <td>{ auto.color }</td>
                             <td>{ auto.year }</td>
-                            <td>{ auto.model }</td>
-                            <td>{ auto.manufacturer }</td>
-                            <td>{ auto.sold }</td>
+                            <td>{ auto.model.name }</td>
+                            <td>{ auto.model.manufacturer.name}</td>
+                            <td>{ String(auto.sold) }</td>
                         </tr>)
                     })}
                 </tbody>
