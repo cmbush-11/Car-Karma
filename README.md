@@ -49,10 +49,10 @@ The service API has three models: customer, salesperson, and sale. The user can 
 | Action | Method | URL
 | ----------- | ----------- | ----------- |
 | List all customers | GET | http://localhost:8090/api/customers/
-| Show a specific customer | GET | http://localhost:8090/api/customers/<id>/
+| Show a specific customer | GET | http://localhost:8090/api/customers/id/
 | Create a customer | POST | http://localhost:8090/api/customers/
-| Edit a customer | PUT | http://localhost:8090/api/customers/<id>/
-| Delete a specific customer | DELETE | http://localhost:8090/api/customers/<id>/
+| Edit a customer | PUT | http://localhost:8090/api/customers/id/
+| Delete a specific customer | DELETE | http://localhost:8090/api/customers/id/
 
 To list all customers send a GET request to the listed URL.
 
@@ -76,10 +76,10 @@ To delete a specific customer, send a DELETE request to the same URL you would u
 | Action | Method | URL
 | ----------- | ----------- | ----------- |
 | List all salespeople | GET | http://localhost:8090/api/salespeople/
-| Show a specific salesperson | GET | http://localhost:8090/api/salespeople/<id>/
+| Show a specific salesperson | GET | http://localhost:8090/api/salespeople/id/
 | Create a salesperson | POST | http://localhost:8090/api/salespeople/
-| Edit a salesperson | PUT | http://localhost:8090/api/salespeople/<id>/
-| Delete a specific salesperson | DELETE | http://localhost:8090/api/salespeople/<id>/
+| Edit a salesperson | PUT | http://localhost:8090/api/salespeople/id/
+| Delete a specific salesperson | DELETE | http://localhost:8090/api/salespeople/id/
 
 To list all salespeople send a GET request to the listed URL.
 
@@ -102,16 +102,16 @@ To delete a specific salesperson, send a DELETE request to the same URL you woul
 | Action | Method | URL
 | ----------- | ----------- | ----------- |
 | List all sales | GET | http://localhost:8090/api/sales/
-| Show a specific sale | GET | http://localhost:8090/api/sales/<id>/
+| Show a specific sale | GET | http://localhost:8090/api/sales/id/
 | Create a sale | POST | http://localhost:8090/api/salesp/
-| Edit a sale | PUT | http://localhost:8090/api/sales/<id>/
-| Delete a specific sale | DELETE | http://localhost:8090/api/sales/<id>/
+| Edit a sale | PUT | http://localhost:8090/api/sales/id/
+| Delete a specific sale | DELETE | http://localhost:8090/api/sales/id/
 
 To list all sales send a GET request to the listed URL.
 
 To see the details of an individual sale, send a GET request to the listed URL, replacing <id> with that sale's integer ID. The IDs can be found in the list of all sales.
 
-To create create a sale change the request format to JSON and send a POST request to the listed URL. The JSON will be in the following format, which will create a sale with the salesperson and customer corresponding to these IDs, the vehicle corresponding to that VIN, and a price of 123,456. 
+To create create a sale change the request format to JSON and send a POST request to the listed URL. The JSON will be in the following format, which will create a sale with the salesperson and customer corresponding to these IDs, the vehicle corresponding to that VIN, and a price of 123,456. Note the VIN must correspond to an automobile in the inventory.
 ```
 {
 	"price": "123456",
