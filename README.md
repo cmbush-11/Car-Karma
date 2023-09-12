@@ -1,5 +1,7 @@
 # CarCar
 
+CarCar is you one stop solution for managing your auto dealership. It contains separate microservices for your inventory, your service side, and your sales side. With it you can manage your employees, schedule service appointments, log sales, and track your inventory.
+
 Team:
 
 * Erin Gerber - Service
@@ -135,7 +137,7 @@ To delete a specific model, send a DELETE request to the same URL you would use 
 The service microservice has three models, appointments, technician and automobileVO. The poller.py file uses the imported automobileVO model to call data from the inventory api, this allows for the service api to have access to automobile data. AutomobileVO model includes import_href, vin and sold fields. This poller allows for up to date information and connection to the inventory database. The appointments model has date_time, reason, status, vin. customer, vip and technicians (FK). This model is used to allow you to create a new appointment, view current and past appointments as well as update the status of the appointment from created to cancelled or finished. The technician model includes first_name, last_name and employee_id fields and is used for creating a new technician, deleting and viewing technicians.
 
 
-###technicians
+### Technicians
 
 | Action | Method | URL
 | ----------- | ----------- | ----------- |
@@ -196,7 +198,7 @@ Deleting a technician(takes no body and is based off of id) returns:
 ```
 
 
-###Appointments:
+### Appointments:
 
 | Action | Method | URL
 | ----------- | ----------- | ----------- |
