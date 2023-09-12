@@ -1,6 +1,6 @@
 import React,{ useEffect, useState } from 'react';
 
-function SaleList(props) {
+function SaleList() {
     const [sales, setSales] = useState([]);
 
     const fetchData = async () => {
@@ -42,11 +42,11 @@ return (
         <tbody>
             {sales.map((sale) => {
             return (
-                <tr key={ sales.id }>
-                <td>{ sale.salesperson.first_name } { sale.salesperson.last_name }</td>
-                <td>{ sale.customer.first_name } { sale.customer.last_name }</td>
-                <td>{ sale.automobile.vin }</td>
-                <td>{ sale.price }</td>
+                <tr key={sale.id}>
+                    <td>{ sale.salesperson.first_name } { sale.salesperson.last_name }</td>
+                    <td>{ sale.customer.first_name } { sale.customer.last_name }</td>
+                    <td>{ sale.automobile.vin }</td>
+                    <td>{ sale.price }</td>
                 <td><button onClick={() => deleteSale(sale)}>Delete</button></td>
                 </tr>
             );
