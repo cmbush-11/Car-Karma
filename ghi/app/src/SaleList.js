@@ -1,6 +1,6 @@
 import React,{ useEffect, useState } from 'react';
 
-function SaleList() {
+function SaleList(props) {
     const [sales, setSales] = useState([]);
 
     const fetchData = async () => {
