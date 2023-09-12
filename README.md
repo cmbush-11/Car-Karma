@@ -165,9 +165,6 @@ List technicians response(takes no body):
 ```
 
 
-
-
-
 Creating technician takes JSON body:
 
 ```
