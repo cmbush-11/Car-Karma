@@ -1,5 +1,7 @@
 # CarCar
 
+CarCar is you one stop solution for managing your auto dealership. It contains separate microservices for your inventory, your service side, and your sales side. With it you can manage your employees, schedule service appointments, log sales, and track your inventory.
+
 Team:
 
 * Erin Gerber - Service
