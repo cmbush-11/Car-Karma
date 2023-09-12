@@ -2,7 +2,7 @@
 
 Team:
 
-* Person 1 - Which microservice?
+* Erin Gerber - Service
 * Christopher M. Bush - Sales
 
 ## How to Run this App
