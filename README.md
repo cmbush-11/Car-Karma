@@ -108,8 +108,8 @@ The Automobile model has 5 fields.
 | ----------- | ----------- | ----------- |
 | List all automobiles | GET | http://localhost:8100/api/automobiles/
 | Show a specific automobile | GET | http://localhost:8100/api/automobiles/id/
-| Create a automobile | POST | http://localhost:8090/api/automobiles/
-| Edit a automobile | PUT | http://localhost:8100/api/automobiles/id/
+| Create an automobile | POST | http://localhost:8090/api/automobiles/
+| Edit a nautomobile | PUT | http://localhost:8100/api/automobiles/id/
 | Delete a specific automobile | DELETE | http://localhost:8100/api/automobiles/id/
 
 
